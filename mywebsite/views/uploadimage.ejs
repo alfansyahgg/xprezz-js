@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>EJS Upload Image</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <%include header%>
+  </head>
+  <body>
+  <div class="container">
+  	<div class="panel panel-primary">
+	  	<div class="panel-heading">
+	  		Upload Image
+        <a href="/" class="btn btn-success pull-right"><i class="fa fa-home"></i>&nbsp;Home</a>
+        <div class="clearfix"></div>
+	  	</div>
+		<div class="panel-body">
+			<form method="post" enctype="multipart/form-data" action="/upload/uploadGambar">
+				<label>Images</label>
+				<input accept="image/*" type="file" multiple name="pictures"></input>
+				<br>
+				<button type="submit" class="btn btn-warning">Upload</button>
+			</form>
+		</div>  	
+  	</div>
+  </div>
+  </body>
+  </html>

@@ -4,6 +4,11 @@
     <title>EJS Alf</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <%include header%>
+    <style type="text/css">
+        .swal2-popup {
+          font-size: 1.6rem !important;
+        }
+    </style>
   </head>
   <body>
     <div class="container">
@@ -11,7 +16,13 @@
     		<div class="panel-heading">
     			<div>
     				<b class="pull-left">Data</b>
-    				<button class="pull-right btn btn-success" data-toggle="modal" data-target="#tambahData" ><i class="fa fa-plus-circle"></i>&nbsp;Tambah</button>
+                    <div class="pull-right">
+                    <a href="/upload" style="margin-right: 10px;" class="btn btn-info"><i class="fa fa-upload"></i>&nbsp;Upload Gambar</a>
+
+                    <a id="exportPDF" href="javascript:void(0)" style="margin-right: 10px;" class="btn btn-danger"><i class="fa fa-file-pdf-o"></i>&nbsp;PDF</a>
+
+                    <button class="btn btn-success" data-toggle="modal" data-target="#tambahData" ><i class="fa fa-plus-circle"></i>&nbsp;Tambah</button>
+                    </div>
     				<div class="clearfix"></div>
     			</div>
     		</div>
@@ -38,8 +49,8 @@
     							<td><%= data[i].hobi %></td>
     							<td class="text-center">
     							<span>
-    								<a hreh="javascript:void(0)" data-toggle="modal" data-target="#updateData<%=data[i].noinduk%>" class="btn btn-info">Edit</a>
-    								<a href="/form/deleteData?noinduk=<%= data[i].noinduk %>" class="btn btn-danger">Delete</a>
+    								<a hreh="javascript:void(0)" data-toggle="modal" data-target="#updateData<%=data[i].noinduk%>" class="btn btn-primary"><i class="fa fa-edit"></i>&nbsp;Edit</a>
+    								<a href="/form/deleteData?noinduk=<%= data[i].noinduk %>" class="btn btn-danger"><i class="fa fa-trash-o"></i>&nbsp;Delete</a>
     							</span>
     							</td>
     						</tr>    						
@@ -157,3 +168,33 @@
 </div>
 
 </html>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("a#exportPDF").on('click',() =>{
+            let seturl = window.location.href + "form/export";
+
+        fetch(seturl)
+            .then((response) => {
+                return response.json();
+            })
+            .then((res) => {
+                console.log(res)
+                if(res.status){
+                    Swal.fire({
+                        'icon': 'success',
+                        'title': 'Success',
+                        'text': 'PDF File Downloaded',
+                        'showCancelButton': true,
+                        confirmButtonText: 'Open',
+                        cancelButtonText: 'Close'
+                    }
+                    ).then((result) => {
+                        if(result.value){
+                            window.open("http://localhost:3000/tes.pdf");
+                        }
+                    })
+                }
+            })
+        })
+    })
+</script>
